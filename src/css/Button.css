@@ -1,0 +1,8 @@
+#button-grid{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+}
+#button-equals{
+  flex-grow: 2;
+}

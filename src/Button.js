@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Button extends Component {
 
   handleClick = () => {
-    alert(this.props.name);
+    this.props.clickHandler(this.props.name);
   }
   render(){
     const { name } = this.props;

@@ -1,5 +1,13 @@
 export default function Calculator(firstValue,secondValue,operator) {
   let value;
+  if(operator === "+")
+    value = parseFloat(firstValue) + parseFloat(secondValue);
+  else if(operator === "-")
+    value = parseFloat(firstValue) - parseFloat(secondValue);
+  else if(operator === "x")
+    value = parseFloat(firstValue) * parseFloat(secondValue);
+  else if(operator === "÷")
+    value = parseFloat(firstValue) / parseFloat(secondValue);
   return value;
 }
 

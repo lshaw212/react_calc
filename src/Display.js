@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Display extends Component {
-  render(){
-    return(
-      <div id="display">{this.props.logic}</div>
-    )
-  }
-}
+const Display =({text, logic}) => (
+  <div id="display">{text}{logic}</div>
+)
+
 
 export default Display;

@@ -32,7 +32,16 @@ class App extends Component {
     }
   }
 
-  inputOperator = name => {
+  inputOperator = async name => {
+    // if(operandSymbols.includes(name) && this.state.waitingForOperand === false){
+    //   equation = this.state.equation + name;
+    //   this.setState({waitingForOperand:true,operator:name,equation:equation});
+    //   return
+    // } else if(operandSymbols.includes(name) && this.state.waitingForOperand === true){
+    //   await this.inputEquals();
+    //   equation = this.state.answer + name;
+    //   this.setState({equation:equation});
+    // }
     if(operandSymbols.includes(name)){
       equation = this.state.equation + name;
       this.setState({waitingForOperand:true,operator:name,equation:equation});
@@ -53,16 +62,48 @@ class App extends Component {
     }
   }
   inputDot = () => {
-    if(!this.state.equation.includes('.'))
-      this.inputNumber('.');
-    else
-      return;
+    if(this.state.waitingForOperand === true){
+      if(!this.state.secondValue.includes('.'))
+        return this.inputNumber('.');
+    } else {
+      if(!this.state.firstValue.includes('.'))
+        return this.inputNumber('.');
+    }
   }
   inputDelete = () => {
+    let lastChar = this.state.equation[this.state.equation.length-1];
     equation = this.state.equation.slice(0,-1);
-    this.setState({equation:equation});
+    if(operandSymbols.includes(lastChar))
+      return this.setState({operator:null,waitingForOperand:false,equation:equation})
+    if(this.state.waitingForOperand === true){
+      value = this.state.secondValue.slice(0,-1);
+      return this.setState({secondValue:value,equation:equation});
+    } else {
+      value = this.state.firstValue.slice(0,-1);
+      return this.setState({firstValue:value,equation:equation});
+    }
   }
 
+  handleKeyDown = (event) => {
+    let { key } = event;
+
+    //Change icons for use
+    if(key === '/')
+      key = '÷';
+    if(key === '*')
+      key = 'x';
+
+    if((/\d/).test(key))
+      this.inputNumber(key);
+    else if(key === '.')
+      this.inputDot();
+    else if(key === 'Backspace')
+      this.inputDelete();
+    else if(operandSymbols.includes(key))
+      this.inputOperator(key);
+    else if(key === 'Enter')
+      this.inputEquals();
+  }
 
   resetState = () =>{
     this.setState({
@@ -74,11 +115,19 @@ class App extends Component {
     });
   }
 
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyDown)
+  }
+  
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown)
+  }
+
   render() {
     return (
       <div className="App">
-        <Display style={{backgroundColor: 'red'}} logic={this.state.equation || '0'}/>
-        <Display style={{backgroundColor: 'aqua'}} logic={this.state.answer || '0'} />
+        <Display text="Equation: " style={{backgroundColor: 'red'}} logic={this.state.equation || '0'}/>
+        <Display text="Answer: " style={{backgroundColor: 'aqua'}} logic={this.state.answer || '0'} />
         <ButtonGrid
           inputNumber={this.inputNumber}
           inputOperator={this.inputOperator}

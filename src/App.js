@@ -4,8 +4,9 @@ import Display from './Display';
 import Calculator from "./Calculator";
 import Checker from './check';
 
-const operandSymbols = "x÷+-"
-let value,equation;
+const operandSymbols = 'x÷+-'
+const Operators = '0123456789';
+let answer,value,equation;
 
 class App extends Component {
   constructor(props){
@@ -33,20 +34,24 @@ class App extends Component {
   }
 
   inputOperator = async name => {
+    value = this.state.equation[this.state.equation.length-1];
+    let g = "f";
+    if(!isNaN(value)){
+      console.log("Oh???");
+      equation= this.state.equation + name;
+      return this.setState({equation:equation, waitingForOperand:true, operator:name});
+    } else if(!isNaN(value) && this.state.waitingForOperand == true) {
+      console.log("oh?");
+      await this.inputEquals();
+      equation = this.state.answer + name;
+      return this.setState({waitingForOperand:true,firstValue:this.state.answer,operator:name,equation:equation});
+    }
+    return
+
     // if(operandSymbols.includes(name) && this.state.waitingForOperand === false){
     //   equation = this.state.equation + name;
-    //   this.setState({waitingForOperand:true,operator:name,equation:equation});
-    //   return
-    // } else if(operandSymbols.includes(name) && this.state.waitingForOperand === true){
-    //   await this.inputEquals();
-    //   equation = this.state.answer + name;
-    //   this.setState({equation:equation});
-    // }
-    if(operandSymbols.includes(name)){
-      equation = this.state.equation + name;
-      this.setState({waitingForOperand:true,operator:name,equation:equation});
-      return
-    }
+    //   return this.setState({waitingForOperand:true,operator:name,equation:equation});
+    // } 
   }
 
   inputEquals = () => {
@@ -99,8 +104,10 @@ class App extends Component {
       this.inputDot();
     else if(key === 'Backspace')
       this.inputDelete();
-    else if(operandSymbols.includes(key))
+    else if(operandSymbols.includes(key)){
+      console.log(key);
       this.inputOperator(key);
+    }
     else if(key === 'Enter')
       this.inputEquals();
   }
@@ -137,6 +144,12 @@ class App extends Component {
           inputDelete={this.inputDelete}
           reset={this.resetState}
         />
+        <Display text="answer -  " logic={this.state.answer}/>
+        <Display text="equation -  " logic={this.state.equation}/>
+        <Display text="firstValue -  " logic={this.state.firstValue}/>
+        <Display text="secondValue -  " logic={this.state.secondValue}/>
+        <Display text="operator -  " logic={this.state.operator}/>
+        <Display text="waitingForOperand -  " logic={this.state.waitingForOperand}/>
       </div>
     );
   }
@@ -159,4 +172,27 @@ export default App;
 //     console.log(value);
 //   }
 //   this.setState({name:value});
+// }
+
+
+// inputOperator = async name => {
+//   value = this.state.equation[this.state.equation.length-1];
+//   if(!this.state.firstValue){
+//     console.log("YAYYA");
+//   }
+ 
+//   if(operandSymbols.includes(name) && this.state.waitingForOperand === false){
+//     equation = this.state.equation + name;
+//     return this.setState({waitingForOperand:true,operator:name,equation:equation});
+ 
+//   } else if(operandSymbols.includes(name) && this.state.waitingForOperand === true){
+    
+ 
+//     if(operandSymbols.includes(value)){
+//       return
+//     }
+//     await this.inputEquals();
+//     equation = this.state.answer + name;
+//     return this.setState({waitingForOperand:true,firstValue:this.state.answer,operator:name,equation:equation});
+//   }
 // }

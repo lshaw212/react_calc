@@ -25,7 +25,7 @@ const ButtonGrid = ({inputNumber,inputOperator,inputEquals,inputDot,inputDelete,
       <Button name="DEL" clickHandler={inputDelete}></Button>
       <Button name="x" clickHandler={inputOperator}></Button>
       <Button name="+" clickHandler={inputOperator}></Button>
-      <Button name=")" clickHandler={clickHandler}></Button>
+      <Button name="±" clickHandler={clickHandler}></Button>
     </div>
     <div>
       <Button name="AC" clickHandler={reset}></Button>

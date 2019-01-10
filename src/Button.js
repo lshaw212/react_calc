@@ -9,7 +9,7 @@ class Button extends Component {
     const { name } = this.props;
     return(
       <div>
-        <button onClick={this.handleClick}>{name}</button>
+        <button onClick={this.handleClick} className="calc-btn">{name}</button>
       </div>
     )
   }

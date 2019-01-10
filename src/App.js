@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ButtonGrid from './ButtonGrid';
 import Display from './Display';
 import Calculator from "./Calculator";
+import DisplayText from "./DisplayText";
 import Checker from './check';
 
 const operandSymbols = 'x÷+-'
@@ -12,7 +13,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      answer: null,
+      answer: 0,
       equation: '',
       firstValue: '',
       secondValue: '',
@@ -35,23 +36,21 @@ class App extends Component {
 
   inputOperator = async name => {
     value = this.state.equation[this.state.equation.length-1];
-    let g = "f";
-    if(!isNaN(value)){
-      console.log("Oh???");
+    if(!isNaN(value) && this.state.waitingForOperand === false){
+      console.log("ohhhh");
       equation= this.state.equation + name;
       return this.setState({equation:equation, waitingForOperand:true, operator:name});
-    } else if(!isNaN(value) && this.state.waitingForOperand == true) {
-      console.log("oh?");
+    } else if(!isNaN(value) && this.state.waitingForOperand === true) {
+      console.log("weeee");
       await this.inputEquals();
       equation = this.state.answer + name;
       return this.setState({waitingForOperand:true,firstValue:this.state.answer,operator:name,equation:equation});
+    } else if(!value){
+      equation = 0 + name;
+      return this.setState({equation:equation, firstValue:0,operator:name, waitingForOperand:true});
     }
+    console.log("Fix when a dot is last");
     return
-
-    // if(operandSymbols.includes(name) && this.state.waitingForOperand === false){
-    //   equation = this.state.equation + name;
-    //   return this.setState({waitingForOperand:true,operator:name,equation:equation});
-    // } 
   }
 
   inputEquals = () => {
@@ -91,7 +90,7 @@ class App extends Component {
 
   handleKeyDown = (event) => {
     let { key } = event;
-
+    
     //Change icons for use
     if(key === '/')
       key = '÷';
@@ -99,17 +98,15 @@ class App extends Component {
       key = 'x';
 
     if((/\d/).test(key))
-      this.inputNumber(key);
+      return this.inputNumber(key);
     else if(key === '.')
-      this.inputDot();
+      return this.inputDot();
     else if(key === 'Backspace')
-      this.inputDelete();
-    else if(operandSymbols.includes(key)){
-      console.log(key);
-      this.inputOperator(key);
-    }
+      return this.inputDelete();
+    else if(operandSymbols.includes(key))
+      return this.inputOperator(key);
     else if(key === 'Enter')
-      this.inputEquals();
+      return this.inputEquals();
   }
 
   resetState = () =>{
@@ -133,8 +130,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Display text="Equation: " style={{backgroundColor: 'red'}} logic={this.state.equation || '0'}/>
-        <Display text="Answer: " style={{backgroundColor: 'aqua'}} logic={this.state.answer || '0'} />
+      <div id="calc-body">
+        <Display equation={this.state.equation} answer={this.state.answer} />
         <ButtonGrid
           inputNumber={this.inputNumber}
           inputOperator={this.inputOperator}
@@ -144,12 +141,14 @@ class App extends Component {
           inputDelete={this.inputDelete}
           reset={this.resetState}
         />
-        <Display text="answer -  " logic={this.state.answer}/>
-        <Display text="equation -  " logic={this.state.equation}/>
-        <Display text="firstValue -  " logic={this.state.firstValue}/>
-        <Display text="secondValue -  " logic={this.state.secondValue}/>
-        <Display text="operator -  " logic={this.state.operator}/>
-        <Display text="waitingForOperand -  " logic={this.state.waitingForOperand}/>
+      </div>
+        
+        <DisplayText text="answer -  " logic={this.state.answer}/>
+        <DisplayText text="equation -  " logic={this.state.equation}/>
+        <DisplayText text="firstValue -  " logic={this.state.firstValue}/>
+        <DisplayText text="secondValue -  " logic={this.state.secondValue}/>
+        <DisplayText text="operator -  " logic={this.state.operator}/>
+        <DisplayText text="waitingForOperand -  " logic={this.state.waitingForOperand}/>
       </div>
     );
   }

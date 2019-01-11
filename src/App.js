@@ -37,17 +37,20 @@ class App extends Component {
   inputOperator = async name => {
     value = this.state.equation[this.state.equation.length-1];
     if(!isNaN(value) && this.state.waitingForOperand === false){
-      console.log("ohhhh");
       equation= this.state.equation + name;
       return this.setState({equation:equation, waitingForOperand:true, operator:name});
     } else if(!isNaN(value) && this.state.waitingForOperand === true) {
-      console.log("weeee");
       await this.inputEquals();
       equation = this.state.answer + name;
       return this.setState({waitingForOperand:true,firstValue:this.state.answer,operator:name,equation:equation});
     } else if(!value){
-      equation = 0 + name;
-      return this.setState({equation:equation, firstValue:0,operator:name, waitingForOperand:true});
+      if(this.state.answer === 0){
+        equation = 0 + name;
+        return this.setState({equation:equation, firstValue:0,operator:name, waitingForOperand:true});
+      } else{
+        equation = this.state.answer + name;
+        return this.setState({equation:equation, firstValue:this.state.answer,operator:name, waitingForOperand:true});
+      }
     }
     console.log("Fix when a dot is last");
     return
@@ -55,8 +58,9 @@ class App extends Component {
 
   inputEquals = () => {
     value = Calculator(this.state.firstValue,this.state.secondValue,this.state.operator);
-    this.setState({answer:value});
     this.resetState();
+    if(value)
+      this.setState({answer:value});
     return
   }
 
@@ -111,6 +115,7 @@ class App extends Component {
 
   resetState = () =>{
     this.setState({
+      answer: 0,
       equation: '',
       firstValue: '',
       secondValue: '',
@@ -131,8 +136,10 @@ class App extends Component {
     return (
       <div className="App">
       <div id="calc-body">
+      <div id="calc-name">CASIO</div>
         <Display equation={this.state.equation} answer={this.state.answer} />
         <ButtonGrid
+          id="button-grid"
           inputNumber={this.inputNumber}
           inputOperator={this.inputOperator}
           inputEquals={this.inputEquals}
@@ -143,12 +150,12 @@ class App extends Component {
         />
       </div>
         
-        <DisplayText text="answer -  " logic={this.state.answer}/>
+        {/* <DisplayText text="answer -  " logic={this.state.answer}/>
         <DisplayText text="equation -  " logic={this.state.equation}/>
         <DisplayText text="firstValue -  " logic={this.state.firstValue}/>
         <DisplayText text="secondValue -  " logic={this.state.secondValue}/>
         <DisplayText text="operator -  " logic={this.state.operator}/>
-        <DisplayText text="waitingForOperand -  " logic={this.state.waitingForOperand}/>
+        <DisplayText text="waitingForOperand -  " logic={this.state.waitingForOperand}/> */}
       </div>
     );
   }

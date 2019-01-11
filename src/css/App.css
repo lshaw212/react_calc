@@ -4,14 +4,24 @@
   justify-content: center;
 }
 
-
+#calc-name{
+  font-family: Casio;
+  font-size: 1.5em;
+  color: white;
+  text-align: left;
+  padding: 30px 0 0 40px;
+  width: 100%;
+}
 #calc-body{
   background-color: #39393b;
   border-radius: 5px;
-  height: 400px;
+  height: 540px;
   width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 30px;
+}
+#button-grid{
+  margin-top: 20px;
 }

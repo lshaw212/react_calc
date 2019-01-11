@@ -1,12 +1,12 @@
 #display-screen{
   background-color: #a2af77;
-  width: 300px;
-  height: 75px;
+  width: 350px;
+  height: 100px;
   border-radius: 10px;
   margin: 20px 5px 20px 5px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 #display{
   font-family: digitalCounter;

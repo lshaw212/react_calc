@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ButtonGrid from './ButtonGrid';
 import Display from './Display';
 import Calculator from "./Calculator";
+import Footer from './Footer';
 import DisplayText from "./DisplayText";
 import Checker from './check';
 
@@ -135,27 +136,23 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      <div id="calc-body">
-      <div id="calc-name">CASIO</div>
-        <Display equation={this.state.equation} answer={this.state.answer} />
-        <ButtonGrid
-          id="button-grid"
-          inputNumber={this.inputNumber}
-          inputOperator={this.inputOperator}
-          inputEquals={this.inputEquals}
-          inputAnswer={this.inputAnswer}
-          inputDot={this.inputDot}
-          inputDelete={this.inputDelete}
-          reset={this.resetState}
-        />
-      </div>
-        
-        {/* <DisplayText text="answer -  " logic={this.state.answer}/>
-        <DisplayText text="equation -  " logic={this.state.equation}/>
-        <DisplayText text="firstValue -  " logic={this.state.firstValue}/>
-        <DisplayText text="secondValue -  " logic={this.state.secondValue}/>
-        <DisplayText text="operator -  " logic={this.state.operator}/>
-        <DisplayText text="waitingForOperand -  " logic={this.state.waitingForOperand}/> */}
+        <div id="content">
+          <div id="calc-body">
+            <div id="calc-name">CASIO</div>
+            <Display equation={this.state.equation} answer={this.state.answer} />
+            <ButtonGrid
+              id="button-grid"
+              inputNumber={this.inputNumber}
+              inputOperator={this.inputOperator}
+              inputEquals={this.inputEquals}
+              inputAnswer={this.inputAnswer}
+              inputDot={this.inputDot}
+              inputDelete={this.inputDelete}
+              reset={this.resetState}
+            />
+          </div>
+        </div>
+        <Footer/>
       </div>
     );
   }

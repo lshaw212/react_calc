@@ -8,7 +8,7 @@ import Checker from './check';
 
 const operandSymbols = 'x÷+-'
 const Operators = '0123456789';
-let answer,value,equation;
+let answer,value,equation, firstValue, secondValue;
 
 class App extends Component {
   constructor(props){
@@ -19,12 +19,12 @@ class App extends Component {
       firstValue: '',
       secondValue: '',
       operator: null,
-      waitingForOperand: false
+      waitingForOperator: true
     }
   }
 
   inputNumber = name => {
-    if(this.state.waitingForOperand === true){
+    if(!this.state.waitingForOperator){
       value= this.state.secondValue + name;
       equation = this.state.equation + name;
       this.setState({secondValue:value,equation:equation});
@@ -37,20 +37,20 @@ class App extends Component {
 
   inputOperator = async name => {
     value = this.state.equation[this.state.equation.length-1];
-    if(!isNaN(value) && this.state.waitingForOperand === false){
+    if(!isNaN(value) && this.state.waitingForOperator){
       equation= this.state.equation + name;
-      return this.setState({equation:equation, waitingForOperand:true, operator:name});
-    } else if(!isNaN(value) && this.state.waitingForOperand === true) {
+      return this.setState({equation:equation, waitingForOperator:false, operator:name});
+    } else if(!isNaN(value) && !this.state.waitingForOperator) {
       await this.inputEquals();
       equation = this.state.answer + name;
-      return this.setState({waitingForOperand:true,firstValue:this.state.answer,operator:name,equation:equation});
+      return this.setState({waitingForOperator:false,firstValue:this.state.answer,operator:name,equation:equation});
     } else if(!value){
       if(this.state.answer === 0){
         equation = 0 + name;
-        return this.setState({equation:equation, firstValue:0,operator:name, waitingForOperand:true});
+        return this.setState({equation:equation, firstValue:0,operator:name, waitingForOperator:true});
       } else{
         equation = this.state.answer + name;
-        return this.setState({equation:equation, firstValue:this.state.answer,operator:name, waitingForOperand:true});
+        return this.setState({equation:equation, firstValue:this.state.answer,operator:name, waitingForOperator:false});
       }
     }
     console.log("Fix when a dot is last");
@@ -71,7 +71,7 @@ class App extends Component {
     }
   }
   inputDot = () => {
-    if(this.state.waitingForOperand === true){
+    if(!this.state.waitingForOperator){
       if(!this.state.secondValue.includes('.'))
         return this.inputNumber('.');
     } else {
@@ -83,13 +83,25 @@ class App extends Component {
     let lastChar = this.state.equation[this.state.equation.length-1];
     equation = this.state.equation.slice(0,-1);
     if(operandSymbols.includes(lastChar))
-      return this.setState({operator:null,waitingForOperand:false,equation:equation})
-    if(this.state.waitingForOperand === true){
+      return this.setState({operator:null,waitingForOperator:true,equation:equation})
+    if(!this.state.waitingForOperator){
       value = this.state.secondValue.slice(0,-1);
       return this.setState({secondValue:value,equation:equation});
     } else {
       value = this.state.firstValue.slice(0,-1);
       return this.setState({firstValue:value,equation:equation});
+    }
+  }
+  changeSign = () => {
+    if(this.state.waitingForOperator)
+    {
+      firstValue = Number(this.state.firstValue) * -1;
+      equation = firstValue;
+      return this.setState({firstValue:firstValue,equation:equation});
+    } else {
+      secondValue = Number(this.state.secondValue) * -1;
+      equation = this.state.firstValue + this.state.operator + secondValue;
+      return this.setState({secondValue:secondValue,equation:equation});
     }
   }
 
@@ -117,11 +129,10 @@ class App extends Component {
   resetState = () =>{
     this.setState({
       answer: 0,
-      equation: '',
       firstValue: '',
       secondValue: '',
       operator: null,
-      waitingForOperand: false
+      waitingForOperator:true
     });
   }
 
@@ -148,6 +159,7 @@ class App extends Component {
               inputAnswer={this.inputAnswer}
               inputDot={this.inputDot}
               inputDelete={this.inputDelete}
+              changeSign={this.changeSign}
               reset={this.resetState}
             />
           </div>

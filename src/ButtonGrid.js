@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Button from './Button';
 
-const ButtonGrid = ({inputNumber,inputOperator,inputEquals,inputDot,inputDelete,inputAnswer, clickHandler, reset}) =>(
+const ButtonGrid = ({inputNumber,inputOperator,inputEquals,inputDot,inputDelete,inputAnswer,changeSign, reset}) =>(
   <div id="button-grid">
     <div>
       <Button name="7" clickHandler={inputNumber}></Button>
@@ -25,7 +25,7 @@ const ButtonGrid = ({inputNumber,inputOperator,inputEquals,inputDot,inputDelete,
       <Button name="DEL" clickHandler={inputDelete}></Button>
       <Button name="x" clickHandler={inputOperator}></Button>
       <Button name="+" clickHandler={inputOperator}></Button>
-      <Button name="±" clickHandler={clickHandler}></Button>
+      <Button name="±" clickHandler={changeSign}></Button>
     </div>
     <div>
       <Button name="AC" clickHandler={reset}></Button>

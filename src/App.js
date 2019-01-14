@@ -25,9 +25,13 @@ class App extends Component {
 
   inputNumber = name => {
     const {firstValue, secondValue, equation, waitingForOperator} = this.state;
-    if(waitingForOperator)
+    if(waitingForOperator){
+      if(!firstValue){
+        return this.setState({firstValue:name,equation:name});
+      }
+        
       return this.setState({firstValue:firstValue+name,equation:equation+name});
-    else 
+    } else 
       return this.setState({secondValue:secondValue+name,equation:equation+name});
   }
 
@@ -43,18 +47,21 @@ class App extends Component {
     } else {
       console.log("we have operator")
       await this.inputEquals();
-      return this.setState({firstValue:answer,operator:name,equation:answer+name, waitingForOperator:false});
+      this.setState({firstValue:answer,operator:name,equation:this.state.answer+name, waitingForOperator:false}); //Need to use this.state.answer as it updates
     }
   }
 
   inputEquals = () => {
-    console.log("no?");
+    console.log("perform equation");
     const {firstValue,secondValue,operator} = this.state;
     value = Calculator(firstValue, secondValue, operator);
-    this.resetState();
-    if(value)
+    
+    // When value is 0, nothing is displayed FIX
+    if(value){
+      this.resetInputs();
       this.setState({answer:value});
-    return
+    }
+    return;
   }
 
   inputAnswer = () => {
@@ -119,14 +126,24 @@ class App extends Component {
       return this.inputEquals();
   }
 
-  resetState = () =>{
+  resetAll = () => {
     this.setState({
-      answer: 0,
+      answer: '',
+      equation: '',
       firstValue: '',
       secondValue: '',
       operator: null,
-      waitingForOperator:true
+      waitingForOperator: true
     });
+  }
+
+  resetInputs = () => {
+    this.setState({
+      firstValue: '',
+      secondValue: '',
+      operator: null,
+      waitingForOperator: true
+    })
   }
 
   componentDidMount() {
@@ -153,7 +170,7 @@ class App extends Component {
               inputDot={this.inputDot}
               inputDelete={this.inputDelete}
               changeSign={this.changeSign}
-              reset={this.resetState}
+              reset={this.resetAll}
             />
           </div>
         </div>

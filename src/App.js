@@ -29,25 +29,29 @@ class App extends Component {
       if(!firstValue){
         return this.setState({firstValue:name,equation:name});
       }
-        
       return this.setState({firstValue:firstValue+name,equation:equation+name});
-    } else 
+    } else{
       return this.setState({secondValue:secondValue+name,equation:equation+name});
+    }
   }
 
   inputOperator = async name => {
     const {operator, firstValue, secondValue, answer} = this.state;
     if(!operator){
-      if(!firstValue && answer)
+      if(!firstValue && answer){
         return this.setState({firstValue:answer,operator:name, equation:answer + name, waitingForOperator:false});
-      else if(!firstValue && !answer)
+      } else if(!firstValue && !answer){
         return this.setState({firstValue:0,operator:name, equation:0 + name, waitingForOperator:false});
-      else
-        this.setState({operator:name, equation:firstValue + name, waitingForOperator:false});
+      } else {
+        return this.setState({operator:name, equation:firstValue + name, waitingForOperator:false});
+      }
     } else {
-      console.log("we have operator")
-      await this.inputEquals();
-      this.setState({firstValue:answer,operator:name,equation:this.state.answer+name, waitingForOperator:false}); //Need to use this.state.answer as it updates
+      if(secondValue){
+        await this.inputEquals();
+        return this.setState({firstValue:this.state.answer,operator:name,equation:this.state.answer+name, waitingForOperator:false}); //Need to use this.state.answer as it updates
+      } else{
+        return await this.setState({operator:name,equation:firstValue+name});
+      }
     }
   }
 
@@ -55,7 +59,6 @@ class App extends Component {
     console.log("perform equation");
     const {firstValue,secondValue,operator} = this.state;
     value = Calculator(firstValue, secondValue, operator);
-    
     // When value is 0, nothing is displayed FIX
     if(value){
       this.resetInputs();
@@ -83,8 +86,9 @@ class App extends Component {
     const {equation,secondValue,firstValue,waitingForOperator} = this.state;
     let lastChar = equation[equation.length-1];
     let slice = equation.slice(0,-1);
-    if(operandSymbols.includes(lastChar))
+    if(operandSymbols.includes(lastChar)){
       return this.setState({operator:null,waitingForOperator:true,equation:slice})
+    }
     if(!waitingForOperator){
       value = secondValue.slice(0,-1);
       return this.setState({secondValue:value,equation:slice});

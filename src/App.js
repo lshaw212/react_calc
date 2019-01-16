@@ -52,9 +52,12 @@ class App extends Component {
   inputEquals = () => {
     console.log("perform equation");
     const {firstValue,secondValue,operator} = this.state;
-    value = Calculator(firstValue, secondValue, operator);
+    value = Calculator(operator, firstValue, secondValue);
     // When value is 0, nothing is displayed FIX
     if(value){
+      // value = value.toFixed(3);
+
+      value = parseFloat(value);
       this.resetInputs();
       this.setState({answer:value});
     }

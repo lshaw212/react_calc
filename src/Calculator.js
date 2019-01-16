@@ -1,11 +1,15 @@
-let value;
-export default function Calculator(firstValue,secondValue,operator) {
-  if(operator === "+")
-    return value = parseFloat(firstValue) + parseFloat(secondValue);
-  else if(operator === "-")
-    return value = parseFloat(firstValue) - parseFloat(secondValue);
-  else if(operator === "x")
-    return value = parseFloat(firstValue) * parseFloat(secondValue);
-  else if(operator === "÷")
-    return value = parseFloat(firstValue) / parseFloat(secondValue);
+
+export default function Calculator(operator,firstValue,secondValue) {
+  switch(operator) {
+    case "+":
+      return parseFloat(firstValue) + parseFloat(secondValue);
+    case "-":
+      return parseFloat(firstValue) - parseFloat(secondValue);
+    case "x":
+      return parseFloat(firstValue) * parseFloat(secondValue);
+    case "÷":
+      return parseFloat(firstValue) / parseFloat(secondValue);
+    default:
+      console.log("Calculation did not work");
+  }
 }

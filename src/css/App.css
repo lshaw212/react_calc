@@ -28,7 +28,7 @@
   width: 85%;
 }
 #calc-body{
-  background-color: #39393b;
+  /* background-color: #39393b; */
   border-radius: 5px;
   height: 550px;
   width: 400px;
@@ -38,6 +38,9 @@
   justify-content: space-around;
   /* justify-content: center; */
   margin-top: 30px;
+  background: #aa4b6b;
+  background: -webkit-linear-gradient(to right, #3a393e, #1d1c22);
+  background: linear-gradient(to right, #3a393e, #1d1c22);
 }
 #footer{
   display: flex;

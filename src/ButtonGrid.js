@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Button from './Button';
 
 const ButtonGrid = ({inputNumber,inputOperator,inputEquals,inputDot,inputDelete,inputAnswer,changeSign, reset}) =>(
@@ -23,17 +23,19 @@ const ButtonGrid = ({inputNumber,inputOperator,inputEquals,inputDot,inputDelete,
     </div>
     <div className="button-columns">
       <Button name="DEL" clickHandler={inputDelete}></Button>
-      <Button name="x" clickHandler={inputOperator}></Button>
-      <Button name="+" clickHandler={inputOperator}></Button>
+      <Button name="x" clickHandler={inputOperator} btnColour="130f10"></Button>
+      <Button name="+" clickHandler={inputOperator} btnColour="130f10"></Button>
       <Button name="±" clickHandler={changeSign}></Button>
     </div>
     <div className="button-columns">
       <Button name="AC" clickHandler={reset}></Button>
-      <Button name="÷" clickHandler={inputOperator}></Button>
-      <Button name="-" clickHandler={inputOperator}></Button>
-      <Button id="button-equals" name="=" clickHandler={inputEquals}></Button>
+      <Button name="÷" clickHandler={inputOperator} btnColour="130f10"></Button>
+      <Button name="-" clickHandler={inputOperator} btnColour="130f10"></Button>
+      <Button name="=" clickHandler={inputEquals} btnColour="f25a2b"></Button>
     </div>
   </div>
 )
 
 export default ButtonGrid;
+
+// 3a393e > 1d1c22

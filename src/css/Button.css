@@ -29,6 +29,16 @@
   padding:0;
   cursor: pointer;
 }
+.calc-btn:focus{
+  /* opacity: 0.75; */
+  outline:0;
+}
+.calc-btn-active{
+  opacity: 0.75;
+}
+.calc-btn:active{
+  opacity: 0.75;
+}
 
 @media only screen and (max-width: 767px){
   #button-grid{

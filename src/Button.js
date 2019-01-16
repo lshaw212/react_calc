@@ -6,10 +6,10 @@ class Button extends Component {
     this.props.clickHandler(this.props.name);
   }
   render(){
-    const { name } = this.props;
+    const { name, btnColour } = this.props;
     return(
       <div>
-        <button onClick={this.handleClick} className="calc-btn">{name}</button>
+        <button onClick={this.handleClick} className="calc-btn" style={{background:`#${btnColour}`}}>{name}</button>
       </div>
     )
   }

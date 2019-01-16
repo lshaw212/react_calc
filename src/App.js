@@ -163,7 +163,6 @@ class App extends Component {
       <div className="App">
         <div id="content">
           <div id="calc-body">
-            <div id="calc-name">CASIO</div>
             <Display equation={this.state.equation} answer={this.state.answer} />
             <ButtonGrid
               id="button-grid"

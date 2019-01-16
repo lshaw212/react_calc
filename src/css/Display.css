@@ -1,6 +1,11 @@
 #display-id{
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  justify-content: space-around;
+  align-items: center;
+  /* justify-content: center; */
+  height: 190px;
   width: 100%;
 }
 #display-screen{
@@ -15,7 +20,7 @@
 #display{
   font-family: digitalCounter;
   font-size: 2em;
-  padding: 5px 5px 5px 5px;
+  padding: 5px 2px 5px 2px;
 }
 
 @media only screen and (max-width: 480px){

@@ -28,7 +28,6 @@
   width: 85%;
 }
 #calc-body{
-  /* background-color: #39393b; */
   border-radius: 5px;
   height: 550px;
   width: 400px;
@@ -36,7 +35,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  /* justify-content: center; */
   margin-top: 30px;
   background: #aa4b6b;
   background: -webkit-linear-gradient(to right, #3a393e, #1d1c22);
@@ -50,7 +48,6 @@
 }
 #footer-text{
   font-family: Casio;
-  /* opacity: 0.75; */
   margin-right: 5px;
 }
 @media only screen and (max-width: 480px){

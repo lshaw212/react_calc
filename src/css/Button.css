@@ -1,13 +1,8 @@
 #button-grid{
   display:flex;
   justify-content: space-around;
-  /* align-items: center; */
-  /* margin-top: 20px; */
   width: 90%;
   height: 55%;
-}
-#button-equals{
-  /* flex-grow: 2; */
 }
 .button-columns{
   width: 15%;
@@ -30,18 +25,8 @@
   cursor: pointer;
 }
 .calc-btn:focus{
-  /* opacity: 0.75; */
   outline:0;
-}
-.calc-btn-active{
-  opacity: 0.75;
 }
 .calc-btn:active{
   opacity: 0.75;
-}
-
-@media only screen and (max-width: 767px){
-  #button-grid{
-    /* width: 100%; */
-  }
 }

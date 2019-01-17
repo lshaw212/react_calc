@@ -2,15 +2,7 @@
 @import './css/Button.css';
 @import './css/Display.css';
 
-
-/* * {
-  background: #000 !important;
-  color: #0f0 !important;
-  outline: solid #f00 1px !important;
-} */
-
 html{
-  /* height: 100%; */
   width: 100%;
   user-select: none;
 }
@@ -39,9 +31,3 @@ body {
   font-family: Casio;
   src: url("./fonts/MGBOLD.TTF");
 }
-
-
-/* code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-} */

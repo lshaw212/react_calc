@@ -21,10 +21,10 @@
   font-family: digitalCounter;
   font-size: 2em;
   padding: 5px 2px 5px 2px;
-  /* overflow: hidden;
+  overflow: hidden;
   text-overflow: ellipsis;
+  /* unicode-bidi: bidi-override; */
   direction: rtl;
-  text-align: left; */
 }
 
 @media only screen and (max-width: 480px){

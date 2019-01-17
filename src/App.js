@@ -26,7 +26,9 @@ class App extends Component {
       if(!firstValue){
         return this.setState({firstValue:name,equation:name});
       }
-      return this.setState({firstValue:firstValue+name,equation:equation+name});
+      let test = this.state.equation;
+      console.log("test?");
+      return this.setState({firstValue:firstValue+name,equation:test+name});
     } else
       return this.setState({secondValue:secondValue+name,equation:equation+name});
   }
@@ -39,7 +41,8 @@ class App extends Component {
       else if(!firstValue && !answer)
         return this.setState({firstValue:0,operator:name, equation:0 + name, waitingForOperator:false});
       else
-        return this.setState({operator:name, equation:firstValue + name, waitingForOperator:false});
+        return this.setState({operator:name, equation:(firstValue + name), waitingForOperator:false});
+        
     } else {
       if(secondValue){
         await this.inputEquals();
@@ -56,7 +59,7 @@ class App extends Component {
     // When value is 0, nothing is displayed FIX
     if(value){
       // value = value.toFixed(3);
-
+      console.log("hi");
       value = parseFloat(value);
       this.resetInputs();
       this.setState({answer:value});

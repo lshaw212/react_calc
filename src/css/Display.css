@@ -24,10 +24,12 @@
   overflow: hidden;
   text-overflow: ellipsis;
   direction: rtl;
+  text-align: left;
 }
 .display_value{
   overflow: hidden;
   direction: ltr;
+  text-align: right;
 }
 
 @media only screen and (max-width: 480px){

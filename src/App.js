@@ -5,7 +5,7 @@ import Calculator from "./Calculator";
 import Footer from './Footer';
 
 const operandSymbols = 'x÷+-'
-let value, expo;
+let value;
 
 class App extends Component {
   constructor(props){
@@ -22,10 +22,6 @@ class App extends Component {
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown);
-    if(window.innerWidth >= 380) // check for smaller phones to have answer fit screen with lower exponential
-      expo = 11;
-    else
-      expo = 9;
   }
   
   componentWillUnmount() {
@@ -36,8 +32,11 @@ class App extends Component {
   inputNumber = name => {
     const {firstValue, secondValue, equation, waitingForOperator} = this.state;
     if(waitingForOperator){
-      if(!firstValue)
+      if(!firstValue){
+        console.log("here")
+        console.log(name);
         return this.setState({firstValue:name,equation:name});
+      }
       return this.setState({firstValue:firstValue+name,equation:equation+name});
     } else
       return this.setState({secondValue:secondValue+name,equation:equation+name});
@@ -66,8 +65,7 @@ class App extends Component {
     value = Calculator(operator, firstValue, secondValue);
     if(value || value === 0){ // Check if our value exists or is a 0 after pressing "=" and perform the actions to display a new answer and resting previous inputs 
       value = parseFloat(value);
-      if(value.toString().length >= expo) // If value length is too long, we cut back our exponential to a certain length to fit our screen
-        value = value.toExponential(expo);
+      
       this.resetInputs();
       this.setState({answer:value});
     }
@@ -76,11 +74,11 @@ class App extends Component {
 
   inputAnswer = () => { // Input the answer when the ans button is clicked
     if(this.state.answer){
-      return this.inputNumber(this.state.answer)
+      return this.inputNumber(this.state.answer.toString()) // convert to string
     }
   }
 
-  inputDot = () => { //Input a decimal point, checking whether we are on first or second value and if a decimal is already present
+  inputDot = () => { // Input a decimal point, checking whether we are on first or second value and if a decimal is already present
     const { firstValue, secondValue, waitingForOperator} = this.state;
     if(!waitingForOperator){
       if(!secondValue.includes('.'))

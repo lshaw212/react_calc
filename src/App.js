@@ -33,8 +33,6 @@ class App extends Component {
     const {firstValue, secondValue, equation, waitingForOperator} = this.state;
     if(waitingForOperator){
       if(!firstValue){
-        console.log("here")
-        console.log(name);
         return this.setState({firstValue:name,equation:name});
       }
       return this.setState({firstValue:firstValue+name,equation:equation+name});

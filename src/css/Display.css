@@ -17,14 +17,19 @@
   flex-direction: column;
   justify-content: space-between;
 }
-#display{
+.display{
   font-family: digitalCounter;
   font-size: 2em;
   padding: 5px 2px 5px 2px;
+}
+.display_equation{
   overflow: hidden;
   text-overflow: ellipsis;
-  /* unicode-bidi: bidi-override; */
   direction: rtl;
+}
+.display_value{
+  overflow: hidden;
+  direction: ltr;
 }
 
 @media only screen and (max-width: 480px){

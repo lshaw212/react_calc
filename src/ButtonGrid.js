@@ -37,5 +37,3 @@ const ButtonGrid = ({inputNumber,inputOperator,inputEquals,inputDot,inputDelete,
 )
 
 export default ButtonGrid;
-
-// 3a393e > 1d1c22

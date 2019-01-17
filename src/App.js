@@ -26,9 +26,7 @@ class App extends Component {
       if(!firstValue){
         return this.setState({firstValue:name,equation:name});
       }
-      let test = this.state.equation;
-      console.log("test?");
-      return this.setState({firstValue:firstValue+name,equation:test+name});
+      return this.setState({firstValue:firstValue+name,equation:equation+name});
     } else
       return this.setState({secondValue:secondValue+name,equation:equation+name});
   }
@@ -59,8 +57,12 @@ class App extends Component {
     // When value is 0, nothing is displayed FIX
     if(value){
       // value = value.toFixed(3);
-      console.log("hi");
+      console.log(value.toString().length);
       value = parseFloat(value);
+      
+      if(value.toString().length > 10){
+        value = value.toExponential(11);
+      }
       this.resetInputs();
       this.setState({answer:value});
     }
@@ -149,12 +151,19 @@ class App extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', this.handleKeyDown)
+    document.addEventListener('keydown', this.handleKeyDown);
+    document.addEventListener("resize", this.updatePredicate);
   }
   
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyDown)
+    document.removeEventListener("resize", this.updatePredicate);
   }
+
+  // Look at adding this for smaller screens
+  // updatePredicate() {
+  //   this.setState({ isDesktop: window.innerWidth > 767 });
+  // }
 
   render() {
     return (

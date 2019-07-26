@@ -11,10 +11,11 @@ export const calculation = (operator,firstValue,secondValue) => {
       return parseFloat(firstValue) / parseFloat(secondValue);
     default:
       console.log("Calculation did not work");
+      return;
   }
 }
 export const addDecimal = (value) => {
-  if(value.length == 0)
+  if(!value)
     return '0.';
   else
     return '.';

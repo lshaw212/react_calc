@@ -10,22 +10,20 @@ class Calculator extends Component {
   constructor(props){
     super(props);
     this.state = {
-      answer: '',
       firstValue: '',
-      secondValue: '',
       operator: '',
-      waitingForOperator: true
+      secondValue: '',
+      answer: ''
     }
   }
 
   componentDidMount() {document.addEventListener('keydown', this.handleKeyDown);}
-  
   componentWillUnmount() {document.removeEventListener('keydown', this.handleKeyDown);}
 
   // when inputting a number, check to what side of the operator to place it
   inputNumber = name => {
-    const {firstValue, secondValue, waitingForOperator} = this.state;
-    if(waitingForOperator){
+    const {firstValue, operator, secondValue} = this.state;
+    if(!operator){
       if(!firstValue)
         return this.setState({firstValue:name});
       return this.setState({firstValue:firstValue+name});
@@ -36,28 +34,27 @@ class Calculator extends Component {
 
   // adding an operator to our equation
   inputOperator = async name => {
-    const {operator, firstValue, secondValue, answer} = this.state;
+    const {firstValue, operator, secondValue, answer} = this.state;
     if(!operator){
       if(!firstValue && answer) // no first value, but an answer, input the previous answer followed by the operator
-        return this.setState({firstValue:answer,operator:name, waitingForOperator:false});
+        return this.setState({firstValue:answer,operator:name});
       else if(!firstValue && !answer) // no first value or previous answer, add a 0 before our operator
-        return this.setState({firstValue:0,operator:name, waitingForOperator:false});
+        return this.setState({firstValue:0,operator:name});
       else // we have a first value, add our operator
-        return this.setState({operator:name, waitingForOperator:false});
+        return this.setState({operator:name});
     } else {
       if(secondValue){ // if we have a second value, perform the full equation and create a new equation with the first value as the new answer, followed by our inputed operator
         await this.inputEquals();
-        return this.setState({firstValue:this.state.answer,operator:name, waitingForOperator:false}); //Need to use this.state.answer as it updates
+        return this.setState({firstValue:this.state.answer,operator:name}); //Need to use this.state.answer as it updates
       }
     }
   }
 
   inputEquals = () => {
-    const {firstValue,secondValue,operator} = this.state;
+    const {firstValue, operator, secondValue} = this.state;
     value = calculation(operator, firstValue, secondValue);
     if(value || value === 0){ // Check if our value exists or is a 0 after pressing "=" and perform the actions to display a new answer and resting previous inputs 
       value = parseFloat(value);
-      // console.log(operator);
       this.resetInputs();
       this.setState({answer:value});
     }
@@ -71,8 +68,8 @@ class Calculator extends Component {
   }
 
   inputDot = () => { // Input a decimal point, checking whether we are on first or second value and if a decimal is already present
-    const { firstValue, secondValue, waitingForOperator} = this.state;
-    if(!waitingForOperator){
+    const { firstValue, operator, secondValue} = this.state;
+    if(operator){
       if(!secondValue.includes('.'))
         return this.inputNumber(addDecimal(secondValue));
     } else {
@@ -82,18 +79,18 @@ class Calculator extends Component {
   }
 
   inputDelete = () => { // Deleting previous value
-    const {equation,secondValue,firstValue,waitingForOperator} = this.state;
-    if(!waitingForOperator && secondValue.length == 0) // If the last input was an operator, delete and update our state to reflect that
-      return this.setState({operator:'',waitingForOperator:true});
-    if(!waitingForOperator) // check if last value was either first or second and update state to reflect
+    const {firstValue, operator, secondValue} = this.state;
+    if(operator && !secondValue) // If the last input was an operator, delete and update our state to reflect that
+      return this.setState({operator:''});
+    if(operator) // check if last value was either first or second and update state to reflect
       return this.setState({secondValue:sliceValue(secondValue)});
     else
       return this.setState({firstValue:sliceValue(firstValue)});
   }
 
   changeSign = () => { // Change our first or second value to a negative and back again
-    const {firstValue,secondValue,operator,waitingForOperator} = this.state;
-    if(waitingForOperator)
+    const {firstValue, operator, secondValue} = this.state;
+    if(!operator)
       return this.setState({firstValue:alterSign(firstValue)});
     else
       return this.setState({secondValue:alterSign(secondValue)});
@@ -120,10 +117,10 @@ class Calculator extends Component {
   }
 
   resetAll = () =>
-    this.setState({answer:'', firstValue:'', secondValue:'', operator:null, waitingForOperator:true});
+    this.setState({answer:'', firstValue:'', secondValue:'', operator:''});
 
   resetInputs = () =>
-    this.setState({firstValue:'', secondValue:'', operator:'', waitingForOperator:true});
+    this.setState({firstValue:'', secondValue:'', operator:''});
 
   render() {
     let equation = this.state.firstValue + this.state.operator + this.state.secondValue;
@@ -131,7 +128,6 @@ class Calculator extends Component {
       <div id="calc-body">
         <Display equation={equation} answer={this.state.answer} />
           <ButtonGrid
-            id="button-grid"
             inputNumber={this.inputNumber}
             inputOperator={this.inputOperator}
             inputEquals={this.inputEquals}

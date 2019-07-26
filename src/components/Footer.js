@@ -1,5 +1,5 @@
 import React from 'react';
-import GitHubLogo from './images/GitHub-Mark-32px.png'
+import GitHubLogo from '../images/GitHub-Mark-32px.png'
 
 const Footer = () => (
   <div id="footer">

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ButtonGrid from './Buttons/ButtonGrid';
-import Display from './Display';
+import Display from './Display/Display';
 import { calculation, addDecimal, alterSign, sliceValue } from './Calculation';
 
 const operandSymbols = 'x÷+-'

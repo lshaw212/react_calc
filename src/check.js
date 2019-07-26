@@ -1,5 +1,6 @@
 export default function Checker(symbol) {
   let updatedEquation;
+  console.log("yas");
   if(symbol === "÷")
     updatedEquation = "/"
   return updatedEquation;
